@@ -1,0 +1,52 @@
+<!--Si hay Registros se muestra este div-->
+<div *ngIf="ropa">
+    <h2 class="text-center mt-2">Ropas Disponibles</h2>
+
+    <!--Tabla que muestra la lista de ropas-->
+    <table class="table text-center table-bordered mt-3">
+
+        <!--Cabecera de la tabla -->
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Color</th>
+            <th scope="col">Tamaño</th>
+            <th scope="col">Estatus</th>
+            <th scope="col">Actualizar</th>
+            <th scope="col">Borrar</th>
+          </tr>
+        </thead>
+
+        <!--Cuerpo de la tabla con el ngFor para iterar sobre la lista-->
+        <tbody *ngFor="let r of ropa">
+            <tr>
+                <td>{{r.id}}</td>
+                <td>{{r.tipo}}</td>
+                <td>{{r.color}}</td>
+                <td>{{r.size}}</td>
+                <td>{{r.estatus}}</td>
+
+                <!--Enlace al componente Update pasandole el id del registro-->
+                <td> <a routerLink="../update/{{r.id}}"> <span class="btn btn-warning"><i class="far fa-edit"></i></span> </a></td>
+
+                <!--Llamada al metodo eliminar mediante un click donde le pasamos el ID-->
+                <td (click)="eliminar(r.id)"> <span class="btn btn-danger"><i class="far fa-trash-alt"></i></span> </td>
+            </tr>
+        </tbody>
+      </table>
+
+      <!--Boton Enlace al componente Crear-->
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-primary" type="button" routerLink="../create"><i class="fas fa-plus"></i> Crear Nuevo</button>
+      </div>
+</div>
+
+<!--Si no hay Registros se muestra este Div-->
+<div *ngIf="!ropa" class="text-center mt-4">
+    <h2 class="d-inline p-2">No hay ropas creadas</h2>
+    
+     <!--Boton Enlace al componente Crear-->
+    <button class="btn btn-primary d-inline p-2 col-6" type="button" routerLink="../create"><i class="fas fa-plus"></i> Crear Nuevo</button>
+
+</div>

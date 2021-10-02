@@ -1,0 +1,22 @@
+<h2 class="text-center mt-2">Formulario de Actualizacion</h2>
+
+<div class="d-grid gap-2 col-6 mx-auto">
+    <form [formGroup]="ropaForm" (ngSubmit)="onSubmit()">
+        
+        <div class="mb-3 form-floating">          
+          <input type="text" class="form-control" id="tipo" formControlName="tipo" placeholder="Tipo">
+          <label for="tipo">Tipo</label>
+        </div>
+
+        <div class="mb-3 form-floating" >
+          <input type="text" class="form-control" id="color" formControlName="color" placeholder="Color">
+          <label for="color">Color</label>
+        </div>
+        <div class="mb-3 form-floating"> 
+            <input type="text" class="form-control" id="size" formControlName="size" maxlength="1" placeholder="Tamaño">
+            <label for="size">Tamaño</label>
+        </div>
+        <button type="submit" class="btn btn-warning d-inline p-2 me-4"><i class="far fa-edit"></i> Actualizar</button>
+        <button class="btn btn-secondary d-inline p-2" routerLink="/home"><i class="fas fa-arrow-left"></i> Regresar</button>
+    </form>
+</div>
