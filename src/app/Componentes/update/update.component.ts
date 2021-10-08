@@ -25,15 +25,16 @@ export class UpdateComponent implements OnInit {
   //Metodo donde se captura el id enviado por parametro y se rellena el formulario con los datos del registro
   ActualizarForm(){
     let id = Number(this.aroute.snapshot.paramMap.get('id')); //Captura del valor enviado por parametro
-    this.service.ReadOneRopa(id).subscribe((data)=> {
-      this.ropa = data;
-
+    
+    let prom = this.service.ReadOneRopa(id);
+    prom.then((res)=>{
+      this.ropa = res;
       this.ropaForm = this.fb.group({
-        tipo: [data.tipo, Validators.required],
-        size: [data.size, Validators.required],
-        color: [data.color, Validators.required]
+        tipo: [this.ropa?.tipo, Validators.required],
+        size: [this.ropa?.size, Validators.required],
+        color: [this.ropa?.color, Validators.required]
       });
-    }); //llamada al servicio para buscar el registro que coincide con ese ID y se rellena el formulario con esa data
+    });
 
     this.ropaForm = this.fb.group({
       tipo: ['', Validators.required],
@@ -48,7 +49,10 @@ export class UpdateComponent implements OnInit {
     this.ropa.color = this.ropaForm.value.color;
     this.ropa.size = this.ropaForm.value.size;
 
-    this.service.UpdateRopa(this.ropa.id, this.ropa).subscribe(); //Llamada al servicio para actualizar un registro en el backend
+    let prom = this.service.UpdateRopa(this.ropa.id, this.ropa); //Llamada al servicio para actualizar un registro en el backend
+    prom.then((res)=>{
+      console.log(res);
+    });
     this.router.navigate(['/home']); //Nos devuelve al componente Home
   }
 }

@@ -9,7 +9,7 @@ import { Ropa } from '../Interface/ropa';
 })
 export class RopaService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { } 
 
   //URL para alcanzar la API
   private url = 'https://apiaspnet.somee.com/';
@@ -30,40 +30,84 @@ export class RopaService {
     return throwError(
       'Algo malo ha ocurrido; Intentelo mas tarde.');
   }
+  
+//Metodo para buscar todos los registros al backend HttpGet
+  ReadRopas(){
+    let promesas = new Promise((resolve: any, reject: any) =>{
+      this.http.get(this.url + this.api).toPromise().then(
+        res => {
+          resolve(res);
+        }, err => {
+          console.log(`Status Code: ${err.status}. Message: ${err.error.message}`);
+          reject(err);
+        }
+      );
+    });
+
+    return promesas;
+  }
 
   //Metodo para buscar un solo registro al backend filtrandolo por ID HttpGet({id})
   ReadOneRopa(id: number){
-    return this.http.get<Ropa>(this.url + this.api + id).pipe(
-      catchError(this.manejarErrores)
-    );
-  }
 
-  //Metodo para buscar todos los registros al backend HttpGet
-  ReadRopas(){
-    return this.http.get<Ropa>(this.url + this.api).pipe(
-      retry(2),
-      catchError(this.manejarErrores)
+    let promesa = new Promise((resolve: any, reject: any)=>{
+      this.http.get(this.url + this.api + id).toPromise().then(
+        res=>{
+          resolve(res);
+        }, err => {
+          console.log(`Status Code: ${err.status}. Message: ${err.error.message}`);
+          reject(err);
+        }
       );
+    });
+
+    return promesa;
   }
 
   //Metodo para eliminar un registro del backend HttpDelete({id})
   DeleteRopa(id: number){
-    return this.http.delete(this.url + this.api + id).pipe(
-      catchError(this.manejarErrores)
-    );
+    let promesa = new Promise((resolve: any, reject: any)=>{
+      this.http.delete(this.url + this.api + id).toPromise().then(
+        res => {
+          resolve(res);
+        }, err => {
+          console.log(`Status Code: ${err.status}. Message: ${err.error.message}. No existe registro con este ID`);
+        }
+      );
+    });
+
+    return promesa;
   }
 
   //Metodo para Ingresar un registro al backend HttpPost
   PostRopa(ropa: Ropa){
-    return this.http.post(this.url + this.api, ropa).pipe(
-      catchError(this.manejarErrores)
-    );
+    let promesa = new Promise((resolve: any, reject: any)=>{
+      this.http.post(this.url + this.api, ropa).toPromise().then(
+        res => {
+          resolve(res);
+        }, err => {
+          console.log(`Status Code: ${err.status}. Message: ${err.error.message}`);
+          reject(err);
+        }
+      );
+    });
+
+    return promesa;
   }
 
   //Metodo para actualizar un registro en el backend HttpPut({id})
   UpdateRopa(id: number, ropa: Ropa){
-    return this.http.put(this.url + this.api + id, ropa).pipe(
-      catchError(this.manejarErrores)
-    );
+    let promesa = new Promise((resolve: any, reject: any)=>{
+      this.http.put(this.url + this.api + id, ropa).toPromise().then(
+        res => {
+          resolve(res);
+        }, err => {
+          console.log(`Status Code: ${err.status}. Message: ${err.error.message}`);
+          reject(err);
+        }
+      );
+    });
+
+    return promesa;
   }
 }

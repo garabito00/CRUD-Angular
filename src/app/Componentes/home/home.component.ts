@@ -16,24 +16,35 @@ export class HomeComponent implements OnInit {
     this.MostarRopa();
   }
 
+
   ngAfterViewInit(){
     this.MostarRopa(); //Llamar al BackEnd para refrescar la lista
   }
+
 
   ropa: Ropa | any;
 
   //Metodo que muestra la lista de Ropas que viene del BackEnd
   MostarRopa(){  
-    this.service.ReadRopas().subscribe((data: Ropa)=> {
-      this.ropa = data;
-    }); //Llamada al metodo en el servicio para traer las ropas y pasarlas a la vista
+    
+    let prom = this.service.ReadRopas();
+
+    prom.then((res) => {
+      this.ropa = res;
+    }, (err) =>{
+      this.ropa = null;
+    });
+
   }
 
   //Metodo para eliminar un registro de la vista y del backEnd
   eliminar(id: number){
-    this.service.DeleteRopa(id).subscribe(() => { 
-      this.ropa = null;
+
+    let prom = this.service.DeleteRopa(id);
+    prom.then((res)=>{
+      console.log(res);
       this.MostarRopa(); //Metodo para refrescar la lista cuando se elimine un registro
-    }); //llamara al metodo del servicio para eliminar un registro del BackEnd
+    });
+    
   }
 }

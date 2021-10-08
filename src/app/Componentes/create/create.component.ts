@@ -38,7 +38,13 @@ export class CreateComponent implements OnInit {
       color: this.ropaForm.value.color,
       estatus: 'A'
     };
-    this.service.PostRopa(ropa).subscribe(); //Llamada al metodo POST del servicio
+    
+    let prom = this.service.PostRopa(ropa);
+    
+    prom.then((res)=>{
+      console.log(res);
+    });
+    
     this.router.navigate(['/home']); //Navegacion al componente Home
   }
 }
