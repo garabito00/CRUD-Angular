@@ -15,6 +15,7 @@ export class RopaService {
   private url = 'https://apiaspnet.somee.com/';
   private api = 'api/ropa/';
 
+  //Metodo no utilizado 
   //Metodo para Manejar Errores
   private manejarErrores(error: HttpErrorResponse) {
     if (error.status === 0) {
